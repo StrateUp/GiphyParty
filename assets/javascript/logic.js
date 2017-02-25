@@ -42,7 +42,7 @@ buttons.setButtons();
 	console.log(animal);
 //access the giphy APi w/ a apikey note we just added to url this time
 //we need to create a variable queryURL for giphyAPI
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 	//what are our requests, a random animal button set a limit of 10
 
 //run ajax to send a request to the giphy server
@@ -54,16 +54,12 @@ buttons.setButtons();
 		.done(function(response) {
 		console.log(response);
 //in here put all the gif display/reporting that will happen
-
 		var results  = response.data 
-        // ========================
-
+       
+		//run through the results page
         for (var i = 0; i < results.length; i++) {
-        // Step 3: uncomment the for loop above and the closing curly bracket below.
 
-        // ============= put step 3 in between these dashes ======================
-
-        // Make a div with jQuery and store it in a variable named animalDiv.
+        // Make a div with jQuery and store it in a variable named videosDiv.
         var videosDiv = $("<div>");
 
         // Make a paragraph tag with jQuery and store it in a variable named p.
@@ -71,11 +67,16 @@ buttons.setButtons();
       
         var p = $("<p>").text(results[i].rating);
 
-        // Make an image tag with jQuery and store it in a variable named animalImage.
+        // Make an image tag with jQuery and store it in a variable named gifImage.
         var gifImage = $("<img>"); 
 
-        // Set the image's src to results[i]'s fixed_height.url.
-        gifImage.attr("src", results[i].images.fixed_height.url);
+        // Set the image's src  and data states
+        gifImage.attr("src", results[i].images.fixed_height_still.url);
+        gifImage.attr("data-still", results[i].images.fixed_height_still.url);
+        gifImage.attr("data-animate",results[i].images.fixed_height.url);
+        gifImage.attr("data-state", "still");
+        gifImage.attr("class","gif");
+
 
         // Append the p variable to the animalDiv variable.
         p.appendTo(videosDiv);
@@ -85,6 +86,31 @@ buttons.setButtons();
 
         // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
         $("#animals").prepend(videosDiv);     
+
+
+        //ANIMATE THE IMAGES
+		//set an on click event to the image*this must be in the .done fcn
+		 $(".gif").on("click", function() {
+
+      	//make a variable named state and then store the image's data-state into it
+       	var state = $(this).attr("data-state");
+
+      	//check if the variable state is equal to 'still',
+      	console.log(state);
+      	//update the src attribute of this image to it's data-animate value,
+      	if( state === "still"){
+
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");          
+      	}else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still"); 
+      	}
+
+    });
+
+
+
 
 }
 });
@@ -103,25 +129,7 @@ buttons.setButtons();
 	//also create: data-state, data-still, and data-animate attributes in the img
 
 
-	//set an on click event to the image
-		 $(".gif").on("click", function() {
-
-      //make a variable named state and then store the image's data-state into it
-       var state = $(this).attr("data-state");
-
-      //check if the variable state is equal to 'still',
-      console.log(state);
-      //update the src attribute of this image to it's data-animate value,
-      if( state === "still"){
-
-          $(this).attr("src", $(this).attr("data-animate"));
-          $(this).attr("data-state", "animate");          
-      }else {
-          $(this).attr("src", $(this).attr("data-still"));
-          $(this).attr("data-state", "still"); 
-      }
-
-    });
+	
 
 //accept form input .val();
 	//user types in animal name
@@ -139,13 +147,22 @@ var form = {
 	submit:"",
 };
 
-		//$("#addAnimal").on("click", function(event) {
+	//when use adds an animal to the list
+		$("#addAnimal").on("click", function(event) {
         //event.preventDefault();
         	// This line grabs the input from the textbox
         //var newTopic = $("#animal-input").val().trim();
+        		var searchTerm = $('#animal-input').val().trim();
+				queryURLNew = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-        	// Adding movie from the textbox to our array
-        //buttons.topics.push(animal);
+			$.ajax({
+   				url: queryURLNew,
+   				method: "GET"
+   			})
+   			.done(function(response) {
+				console.log(response);
+        	});// Adding movie from the textbox to our array
+        });//buttons.topics.push(animal);
 
         //console.log(newTopic);
         //});
