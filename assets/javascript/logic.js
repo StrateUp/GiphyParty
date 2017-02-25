@@ -147,23 +147,33 @@ var form = {
 	submit:"",
 };
 
+
+ $("#addAnimal").on("click", function(event) {
+        event.preventDefault();
+        // This line grabs the input from the textbox
+        var newTopic = $("input").val().trim();
+        console.log(newTopic);
+        // Adding movie from the textbox to our array
+        buttons.topics.push(newTopic);
+
+        // Calling renderButtons which handles the processing of our movie array
+        buttons.setButtons();
+      });
+
+
+	
 	//when use adds an animal to the list
-		$("#addAnimal").on("click", function(event) {
-        //event.preventDefault();
+		
+
         	// This line grabs the input from the textbox
-        //var newTopic = $("#animal-input").val().trim();
-        		var searchTerm = $('#animal-input').val().trim();
-				queryURLNew = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-			$.ajax({
-   				url: queryURLNew,
-   				method: "GET"
-   			})
-   			.done(function(response) {
-				console.log(response);
-        	});// Adding movie from the textbox to our array
-        });//buttons.topics.push(animal);
-
+        	//var newTopic = $("#animal-input").val().trim();
+        		
+        		//var searchTerm = $('#animal-input').val().trim();
+        		//console.log(this.searchTerm);
+				
+		// Adding movie from the textbox to our array
+        //buttons.topics.push(animal);
+		
         //console.log(newTopic);
         //});
     //buttons.setButtons();
