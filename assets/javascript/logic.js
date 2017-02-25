@@ -96,6 +96,32 @@ buttons.setButtons();
 		//onclick append a state of animate
 		//onclick append a state of still
 		//*see inclass assignment 4
+//can we make an image object?
+
+	//1st step: add a class to set an onclick to named gif w/in the image, 
+
+	//also create: data-state, data-still, and data-animate attributes in the img
+
+
+	//set an on click event to the image
+		 $(".gif").on("click", function() {
+
+      //make a variable named state and then store the image's data-state into it
+       var state = $(this).attr("data-state");
+
+      //check if the variable state is equal to 'still',
+      console.log(state);
+      //update the src attribute of this image to it's data-animate value,
+      if( state === "still"){
+
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");          
+      }else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still"); 
+      }
+
+    });
 
 //accept form input .val();
 	//user types in animal name
