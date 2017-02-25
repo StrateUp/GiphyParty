@@ -1,39 +1,5 @@
-//are you ready for this?
-$(document).ready(function(){
 
- 	
-var buttons = {
-	//this array must generate buttons with the animal id
- 	topics:["pug","penguin","flamingo","binturong","kinkajou"],
-
- 	 //run a loop to go throught the items in the array
- 	 setButtons: function(){
-	 	 for (var i = 0; i < this.topics.length; i++) {
-	 			
-	 		//create a button dynamically in jquery
-	 		var topicButton = $("<button class = 'animalBtn'>");
-	 		
-	 		//send our created buttons to the div in HTML
-			$("#animalButtons").append(topicButton);
-
-			//print the array value to the buttons
-	 		topicButton.text(this.topics[i]);
-
-	 		topicButton.attr("data-animal",this.topics[i]);
-
-	 		console.log(this.topics[i]);
- 		}
- 	}
-};
-
-//buttons.topics;
-buttons.setButtons();
-//find element by class
-//$("#animalButtons").find("#button1");
-//find element by element index relative to animalButtons
-//$("#animalButtons").children(2);
-
-
+function setupEvents() {
 
  	$(".animalBtn").on("click",function(){
  	//i think i need an animalButtons variable but im not sure what this means
@@ -92,28 +58,73 @@ buttons.setButtons();
 		//set an on click event to the image*this must be in the .done fcn
 		 $(".gif").on("click", function() {
 
-      	//make a variable named state and then store the image's data-state into it
-       	var state = $(this).attr("data-state");
+	      	//make a variable named state and then store the image's data-state into it
+	       	var state = $(this).attr("data-state");
 
-      	//check if the variable state is equal to 'still',
-      	console.log(state);
-      	//update the src attribute of this image to it's data-animate value,
-      	if( state === "still"){
+	      	//check if the variable state is equal to 'still',
+	      	console.log(state);
+	      	//update the src attribute of this image to it's data-animate value,
+	      	if( state === "still"){
 
-          $(this).attr("src", $(this).attr("data-animate"));
-          $(this).attr("data-state", "animate");          
-      	}else {
-          $(this).attr("src", $(this).attr("data-still"));
-          $(this).attr("data-state", "still"); 
-      	}
+	          $(this).attr("src", $(this).attr("data-animate"));
+	          $(this).attr("data-state", "animate");          
+	      	}else {
+	          $(this).attr("src", $(this).attr("data-still"));
+	          $(this).attr("data-state", "still"); 
+	      	}
 
-    });
-
-
+    	});
 
 
-}
+
+
+		} // end for loop
+	});
 });
+ }
+
+
+
+//are you ready for this?
+$(document).ready(function(){
+
+ 	
+var buttons = {
+	//this array must generate buttons with the animal id
+ 	topics:["pug","penguin","flamingo","binturong","kinkajou"],
+
+ 	 //run a loop to go throught the items in the array
+ 	 setButtons: function(){
+ 	 		$("#animalButtons").empty();
+
+	 	 for (var i = 0; i < this.topics.length; i++) {
+	 			
+	 		//create a button dynamically in jquery
+	 		var topicButton = $("<button class = 'animalBtn'>");
+	 		
+	 		//send our created buttons to the div in HTML
+			$("#animalButtons").append(topicButton);
+
+			//print the array value to the buttons
+	 		topicButton.text(this.topics[i]);
+
+	 		topicButton.attr("data-animal",this.topics[i]);
+
+	 		console.log(this.topics[i]);
+ 		}
+
+ 		setupEvents();
+ 	}
+};
+
+//buttons.topics;
+buttons.setButtons();
+setupEvents();
+//find element by class
+//$("#animalButtons").find("#button1");
+//find element by element index relative to animalButtons
+//$("#animalButtons").children(2);
+
 //on click event for existing animal buttons
 
 	//display rating
@@ -158,7 +169,7 @@ var form = {
 
         // Calling renderButtons which handles the processing of our movie array
         buttons.setButtons();
-      });
+  });
 
 
 	
@@ -178,4 +189,4 @@ var form = {
         //});
     //buttons.setButtons();
 });
-});
+
